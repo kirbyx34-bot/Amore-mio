@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per Beatrice ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pink-main: #ff85a2;
+            --pink-dark: #ff477e;
+            --pink-light: #ffa6c9;
+            --bg-gradient: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        /* Effetto oscuramento sfondo quando la lettera è aperta */
+        body.open-focus {
+            background: linear-gradient(135deg, #eec0b4 0%, #eeb1ee 100%);
+        }
+
+        /* --- SCRITTA DEDICATA --- */
+        .dedication {
+            font-family: 'Dancing Script', cursive;
+            font-size: 42px;
+            color: var(--pink-dark);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 10px rgba(255, 71, 126, 0.3);
+            z-index: 10;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* La scritta scompare quando apriamo */
+        body.open-focus .dedication {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        /* --- SFONDO DI CUORI --- */
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hearts-bg span {
+            position: absolute;
+            display: block;
+            font-size: 28px;
+            color: var(--pink-dark);
+            opacity: 0.5;
+            animation: floatHearts 8s linear infinite;
+            bottom: -50px;
+        }
+
+        /* Più cuori e posizioni casuali */
+        .hearts-bg span:nth-child(1) { left: 5%; animation-duration: 6s; }
+        .hearts-bg span:nth-child(2) { left: 15%; animation-duration: 10s; animation-delay: 1s; }
+        .hearts-bg span:nth-child(3) { left: 25%; animation-duration: 7s; animation-delay: 3s; }
+        .hearts-bg span:nth-child(4) { left: 35%; animation-duration: 11s; }
+        .hearts-bg span:nth-child(5) { left: 50%; animation-duration: 8s; animation-delay: 2s; }
+        .hearts-bg span:nth-child(6) { left: 65%; animation-duration: 12s; }
+        .hearts-bg span:nth-child(7) { left: 80%; animation-duration: 9s; animation-delay: 4s; }
+        .hearts-bg span:nth-child(8) { left: 90%; animation-duration: 7s; }
+
+        @keyframes floatHearts {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- BUSTA --- */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            z-index: 5;
+            animation: dropIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes dropIn {
+            0% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: var(--pink-main);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            box-shadow: 0 20px 40px rgba(255, 133, 162, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        /* Lembo */
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #ff7096;
+            transform-origin: top;
+            transition: transform 0.5s ease 0.2s;
+            z-index: 3;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        /* Interno busta */
+        .envelope::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid var(--pink-light);
+            border-right: 150px solid var(--pink-light);
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid var(--pink-light);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 2;
+        }
+
+        .heart-seal {
+            position: absolute;
+            top: 90px; left: 135px;
+            width: 30px; height: 30px;
+            background-color: var(--pink-dark);
+            transform: rotate(-45deg);
+            z-index: 4;
+            transition: all 0.4s ease;
+        }
+        .heart-seal::before, .heart-seal::after {
+            content: ""; position: absolute;
+            width: 30px; height: 30px;
+            background-color: var(--pink-dark);
+            border-radius: 50%;
+        }
+        .heart-seal::before { top: -15px; left: 0; }
+        .heart-seal::after { left: 15px; top: 0; }
+
+        /* --- FOGLIO LETTERA (IL GIGANTE) --- */
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            width: 270px;
+            height: 170px;
+            background: #fff;
+            background-image: linear-gradient(#e1f1f1 1px, transparent 1px);
+            background-size: 100% 30px;
+            border-radius: 12px;
+            padding: 40px 30px;
+            box-sizing: border-box;
+            z-index: 1;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .letter h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            color: var(--pink-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .letter p {
+            font-size: 16px;
+            color: #333;
+            line-height: 30px; /* Allineato alle righe */
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* --- STATO APERTO (ANIMAZIONI) --- */
+        .envelope-wrapper.open .envelope::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .envelope-wrapper.open .heart-seal {
+            opacity: 0;
+            transform: translateY(-50px) rotate(-45deg) scale(0);
+        }
+
+        /* Il foglio diventa enorme */
+        .envelope-wrapper.open .letter {
+            width: 90vw; /* Quasi tutta la larghezza dello schermo */
+            height: 80vh; /* Quasi tutta l'altezza dello schermo */
+            max-width: 600px; /* Limite per computer */
+            bottom: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%); /* Lo centra perfettamente */
+            z-index: 20;
+            padding: 60px 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        /* Ottimizzazione per schermi piccoli (Telefoni) */
+        @media (max-width: 480px) {
+            .dedication { font-size: 36px; }
+            .envelope { width: 280px; height: 180px; }
+            .envelope::before { border-left-width: 140px; border-right-width: 140px; }
+            .envelope::after { border-left-width: 140px; border-right-width: 140px; }
+            .heart-seal { left: 125px; }
+            .letter { width: 250px; }
+            .envelope-wrapper.open .letter { width: 95vw; height: 85vh; padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg">
+        <span>❤️</span><span>💖</span><span>❤️</span><span>💕</span>
+        <span>❤️</span><span>💖</span><span>💕</span><span>❤️</span>
+    </div>
+
+    <div class="dedication">Ti amo Beatrice ❤️</div>
+
+    <div class="envelope-wrapper" onclick="toggleLetter()">
+        <div class="envelope">
+            <div class="heart-seal"></div>
+            <div class="letter">
+                <h1>Per la mia Beatrice ✨</h1>
+                <p>
+                   Ciao Beatrice,<br><br>
+                    ti scrivo perché non lo so, ci tenevo a scriverti una letterina per dirti tutto quello che penso in generale su di noi e su di te in modo molto più dettagliato. Tu non sai quanto ti voglio bene (ovviamente ti amo), sono veramente felice di averti conosciuto, non puoi capire quanto. Ogni volta che ci dobbiamo vedere mi emoziono e penso ogni secondo a te (sono un cane di merda).<br><br>
+
+Sei la persona più bella che io abbia mai conosciuto, mi dai veramente tutto quello che posso desiderare. Forse la mia paura più grande è che tu possa scappare da me. Io molte volte ho paura che tu possa andartene da me, magari per qualcun altro. Io mi reputo un ragazzo carino e simpatico, ma diciamo che non sono il migliore in tutto. Non mi reputo per niente una persona interessante, non ho molto di cui parlare: in questo periodo non sto facendo molto. In breve, sono super rimpiazzabile.<br><br>
+
+Tu non hai idea di quanto io abbia paura di perderti. Ho paura di te perché non mi va di perderti, ma vabbè. Tu sei così bella e simpatica, sapere che, per ora, io sono quello che tu hai scelto tra tutti mi fa stare così bene sotto certi aspetti. Sei così simpatica e interessante, vorrei che mi parlassi di tutto quello che hai fatto e che vorrai fare. Sei una ragazza d'oro e hai così tanti pregi che, se li elencassi tutti, finirei per scrivere un libro.<br><br>
+
+Io ti adoro, sei la mia bimba. Sei così tanto paziente con me, adoro ogni singola cosa di te, sei così tanto perfetta. Sono veramente ossessionato da te, farei qualsiasi cosa finché me lo chiedi tu, ma forse farti sapere questa cosa non è la scelta migliore, ma vabbè. E io vorrei che con te fosse lo stesso. So che magari è brutto da dire, ma io vorrei stare per sempre con te. Io sono sicuro che tu non sia della mia stessa idea, però ci tenevo a fartelo sapere.<br><br>
+
+Io, ripeto, per quanto sia brutto dirlo, vorrei che tu fossi emotivamente e fisicamente dipendente da me. Vorrei che tu guardassi solo me con quel tuo sguardo, vorrei che tu potessi toccare solo me con quel tocco gentile, come quando mi accarezzi. Vorrei sapere solo io cosa provi ogni secondo, ogni momento della giornata. Vorrei solo che tu potessi vedere solo me come il tuo amore più puro.<br><br>
+
+Per quanto io possa scherzare sul fatto che magari possa lasciarti, sarebbe l'ultima cosa che vorrei. Quando tu mi dici che saresti un pochetto triste in caso di una rottura, io mi dispererei nel modo più assoluto possibile. Forse il fatto che io mi sia affezionato così tanto a te non è per niente qualcosa di positivo e, dicendoti ciò, tu avresti il potere di fare tutto quello che vuoi con me, ma boh, volevo dirtelo perché sono stupido e, comunque, mi hai chiesto tu di comunicare.<br><br>
+
+Ti prego, dimmi ogni cosa che pensi di me, cosa provi, quanto mi ami, cosa faresti per me.
+
+Io ti adoro così tanto...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestione dell'apertura e chiusura tramite classi CSS
+        function toggleLetter() {
+            const wrapper = document.querySelector('.envelope-wrapper');
+            const body = document.body;
+            
+            wrapper.classList.toggle('open');
+            body.classList.toggle('open-focus');
+        }
+    </script>
+
+</body>
+</html>
